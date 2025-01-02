@@ -60,7 +60,7 @@ jobs:
 
   android_version_tests:
     name: Android version tests
-    needs: [ generate_versions, sanity_check ]
+    needs: [ generate_versions ]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
