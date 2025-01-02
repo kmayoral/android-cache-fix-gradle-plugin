@@ -120,9 +120,6 @@ class SimpleAndroidApp {
                 android.useAndroidX=true
                 org.gradle.jvmargs=-Xmx1536m -Dkotlin.daemon.jvm.options=-Xmx768m,-Xms256m
                 kapt.use.worker.api=${kaptWorkersEnabled}
-                android.experimental.enableSourceSetPathsMap=true
-                android.experimental.cacheCompileLibResources=true
-                android.defaults.buildfeatures.renderscript=false
             """.stripIndent()
     }
 
