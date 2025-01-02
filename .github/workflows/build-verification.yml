@@ -2,7 +2,7 @@ name: Verify Build
 
 on:
   push:
-    branches: [ main, citest ]
+    branches: '*'
   pull_request:
   workflow_dispatch:
 
@@ -102,12 +102,19 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           develocity-access-key: ${{ secrets.DV_SOLUTIONS_ACCESS_KEY }}
+      - run: |
+          ls -a "$ANDROID_SDK_ROOT" $HOME/.android $HOME/.config $HOME/.config/.android || true
       - name: Run integration tests
         run: >-
             ./gradlew testAndroid${{ matrix.versions }}
+            --tests "*.jdkImage is normalized when using the same JDK version"
             -x signPluginMavenPublication
             -x signAndroidCacheFixPluginPluginMarkerMavenPublication
             -Porg.gradle.java.installations.auto-download=false
-            -Dpts.mode=$PTS_MODE
+            -Dpts.enabled=false
+            --rerun
+            --scan
         env:
           PTS_MODE: "${{ github.ref_name == 'main' && 'REMAINING_TESTS' || 'RELEVANT_TESTS' }}"
+      - run: |
+          ls -a "$ANDROID_SDK_ROOT" $HOME/.android $HOME/.config $HOME/.config/.android || true
