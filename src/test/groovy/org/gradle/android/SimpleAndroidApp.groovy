@@ -124,8 +124,6 @@ class SimpleAndroidApp {
                 android.experimental.cacheCompileLibResources=true
                 android.defaults.buildfeatures.renderscript=false
             """.stripIndent()
-
-        configureAndroidSdkHome()
     }
 
     private String getPluginBlockConfiguration() {
@@ -279,14 +277,6 @@ class SimpleAndroidApp {
                 implementation 'joda-time:joda-time:2.7'
             }
         """.stripIndent()
-    }
-
-    private void configureAndroidSdkHome() {
-        def env = System.getenv("ANDROID_HOME")
-        if (!env) {
-            def androidSdkHome = new File("${System.getProperty("user.home")}/Library/Android/sdk")
-            file('local.properties').text = "sdk.dir=${androidSdkHome.absolutePath.replace(File.separatorChar, '/' as char)}"
-        }
     }
 
     def file(String path) {
